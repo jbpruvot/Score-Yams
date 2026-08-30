@@ -1571,6 +1571,14 @@ body {
   text-align: center;
 }
 
+.progress-section .player-progress:first-child {
+  border-left: 5px solid var(--player1);
+}
+
+.progress-section .player-progress:last-child {
+  border-left: 5px solid var(--player2);
+}
+
 /* --- Barres de progression (surveillance de l'objectif bonus) --- */
 .progress-bar {
   height: 24px;
@@ -1770,7 +1778,7 @@ body {
   .container {
     max-width: 1180px;
     display: grid;
-    grid-template-columns: 340px 1fr;
+    grid-template-columns: 400px 1fr;
     grid-template-rows: auto auto auto 1fr;
     column-gap: var(--space-32);
     row-gap: var(--space-20);
@@ -1859,15 +1867,18 @@ body {
   }
     .keyboard-hints { display: none; }
 
-  .progress-section { gap: var(--space-10); }
-    .player-progress { padding: var(--space-12) var(--space-16); }
-    .progress-header { margin-bottom: var(--space-6); }
-    .progress-bar { height: 18px; margin-bottom: var(--space-6); }
+  .progress-section { gap: var(--space-16); }
+    .player-progress { padding: var(--space-20); }
+    .progress-header { margin-bottom: var(--space-12); }
+    .progress-header strong { font-size: var(--font-size-xl); }
+    .progress-header small { font-size: var(--font-size-base); }
+    .progress-bar { height: 28px; margin-bottom: var(--space-10); }
+    .progress-text small { font-size: var(--font-size-lg); }
 
   .reset-button {
-        padding: var(--space-8);
-        margin-top: 0;
-        font-size: var(--font-size-base);
+        padding: var(--space-16);
+        margin-top: var(--space-4);
+        font-size: var(--font-size-lg);
   }
 
   .score-table th,
@@ -1889,9 +1900,14 @@ body {
     .score-table tbody td.score.fixed {
           font-size: var(--font-size-base);
     }
-    .score { min-width: 104px; font-size: var(--font-size-base); }
+    .score {
+          min-width: 92px;
+          font-size: var(--font-size-sm);
+          white-space: nowrap;
+    }
 
-  .score-table td.score { height: 36px; font-size: var(--font-size-base); }
+  .score-table td.score { height: 36px; }
+    .score-table tbody td.score.fixed { font-size: var(--font-size-lg); }
 
   .grid-wrapper {
         max-height: calc(100dvh - 96px);
