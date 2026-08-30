@@ -2256,3 +2256,92 @@ body {
     display: none !important;
   }
 }
+
+/* ============================================================
+   FILIGRANE — dés en fond, derrière la feuille de score
+   ============================================================ */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url("filigrane-dice.webp") center center / cover no-repeat;
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* La carte laisse transparaître le filigrane du body::before */
+.container {
+  background: rgba(255, 255, 253, 0.70);
+}
+
+/* Surfaces de la feuille : transparentes ou très légères pour voir le fond */
+.score-table {
+  background: transparent;
+}
+
+.clickable {
+  background: rgba(255, 255, 253, 0.30);
+}
+
+.score-table thead th,
+.score-table th:first-child,
+.score-table td:first-child {
+  background: rgba(255, 255, 253, 0.74);
+}
+
+.grid-wrapper {
+  background: rgba(255, 255, 253, 0.16);
+}
+
+.quick-config,
+.player-progress {
+  background: rgba(255, 255, 253, 0.70);
+}
+
+@media (prefers-color-scheme: dark) {
+  body::before {
+    opacity: 0.14;
+    filter: invert(1) brightness(1.25);
+  }
+
+  .container {
+    background: rgba(38, 40, 40, 0.78);
+  }
+
+  .clickable {
+    background: rgba(38, 40, 40, 0.32);
+  }
+
+  .score-table thead th,
+  .score-table th:first-child,
+  .score-table td:first-child {
+    background: rgba(38, 40, 40, 0.78);
+  }
+
+  .grid-wrapper {
+    background: rgba(38, 40, 40, 0.20);
+  }
+
+  .quick-config,
+  .player-progress {
+    background: rgba(38, 40, 40, 0.72);
+  }
+}
+
+@media print {
+  body::before {
+    display: none;
+  }
+
+  .container,
+  .quick-config,
+  .player-progress,
+  .grid-wrapper,
+  .clickable,
+  .score-table thead th,
+  .score-table td:first-child {
+    background: #fff;
+  }
+}

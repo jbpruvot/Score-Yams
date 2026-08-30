@@ -1,4 +1,4 @@
-const CACHE_NAME = 'yams-v9';
+const CACHE_NAME = 'yams-v10';
 const APP_SHELL = [
   './',
   './index.html',
@@ -6,7 +6,8 @@ const APP_SHELL = [
   './app.js',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './filigrane-dice.webp'
 ];
 
 self.addEventListener('install', (event) => {
