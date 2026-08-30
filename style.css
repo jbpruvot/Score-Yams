@@ -1923,6 +1923,50 @@ body {
 }
 
 /* ============================================================
+   PAYSAGE TABLETTE — tenir toute la feuille sans défilement
+   Sélecteurs #grid volontairement spécifiques pour primer sur
+   toutes les couches précédentes.
+   ============================================================ */
+@media (min-width: 1024px) {
+  .container {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-8);
+    padding: var(--space-16);
+    row-gap: var(--space-8);
+  }
+
+  #grid.score-table th,
+  #grid.score-table td {
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+  }
+
+  #grid.score-table thead th {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+
+  #grid .section-header td {
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+
+  #grid .final-row td {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+  }
+
+  #grid td.score {
+    height: 34px;
+  }
+
+  .grid-wrapper {
+    max-height: calc(100dvh - 104px);
+    overflow-y: auto;
+  }
+}
+
+/* ============================================================
    ÉCRAN DE FIN DE PARTIE — célébration du gagnant + feux d'artifice
    ============================================================ */
 
