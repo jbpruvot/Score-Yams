@@ -2267,13 +2267,13 @@ body::before {
   inset: 0;
   z-index: -1;
   background: url("filigrane-dice.webp") center center / cover no-repeat;
-  opacity: 1;
+  opacity: 0.75;
   pointer-events: none;
 }
 
 /* La carte laisse transparaître le filigrane du body::before */
 .container {
-  background: rgba(255, 255, 253, 0.70);
+  background: rgba(255, 255, 253, 0.50);
 }
 
 /* Surfaces de la feuille : transparentes ou très légères pour voir le fond */
@@ -2282,22 +2282,22 @@ body::before {
 }
 
 .clickable {
-  background: rgba(255, 255, 253, 0.30);
+  background: rgba(255, 255, 253, 0.12);
 }
 
 .score-table thead th,
 .score-table th:first-child,
 .score-table td:first-child {
-  background: rgba(255, 255, 253, 0.74);
+  background: rgba(255, 255, 253, 0.68);
 }
 
 .grid-wrapper {
-  background: rgba(255, 255, 253, 0.16);
+  background: rgba(255, 255, 253, 0.04);
 }
 
 .quick-config,
 .player-progress {
-  background: rgba(255, 255, 253, 0.70);
+  background: rgba(255, 255, 253, 0.66);
 }
 
 @media (prefers-color-scheme: dark) {

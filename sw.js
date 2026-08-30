@@ -1,4 +1,4 @@
-const CACHE_NAME = 'yams-v10';
+const CACHE_NAME = 'yams-v11';
 const APP_SHELL = [
   './',
   './index.html',
