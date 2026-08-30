@@ -2267,13 +2267,16 @@ body::before {
   inset: 0;
   z-index: -1;
   background: url("filigrane-dice.webp") center center / cover no-repeat;
-  opacity: 0.75;
+  opacity: 0.9;
   pointer-events: none;
 }
 
-/* La carte laisse transparaître le filigrane du body::before */
+/* Le filigrane est peint directement sur la carte (voile clair par-dessus) :
+   il traverse ainsi toute la feuille, pas seulement les marges. */
 .container {
-  background: rgba(255, 255, 253, 0.50);
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.67), rgba(255, 255, 255, 0.67)),
+    url("filigrane-dice.webp") center center / cover fixed no-repeat;
 }
 
 /* Surfaces de la feuille : transparentes ou très légères pour voir le fond */
@@ -2307,7 +2310,9 @@ body::before {
   }
 
   .container {
-    background: rgba(38, 40, 40, 0.78);
+    background:
+      linear-gradient(rgba(38, 40, 40, 0.80), rgba(38, 40, 40, 0.80)),
+      url("filigrane-dice.webp") center center / cover fixed no-repeat;
   }
 
   .clickable {
