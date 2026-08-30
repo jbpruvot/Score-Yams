@@ -427,18 +427,17 @@ class YamsGame {
     title.textContent = `${category.charAt(0).toUpperCase() + category.slice(1)}`;
     editor.appendChild(title);
 
+    const hint = document.createElement('p');
+    hint.className = 'editor-hint';
+    hint.textContent = 'Somme des dés — saisie au clavier';
+    editor.appendChild(hint);
+
     const input = document.createElement('input');
     input.type = 'number';
     input.min = '0';
+    input.inputMode = 'numeric';
     input.placeholder = 'score';
     input.setAttribute('aria-label', 'Entrer un score');
-
-    // Quick score buttons
-    [0, 15, 20, 25, 30].forEach(value => {
-      const chip = this.createButton('chip', String(value));
-      chip.onclick = () => input.value = value;
-      editor.appendChild(chip);
-    });
 
     const okBtn = this.createButton('ok', 'OK');
     const cancelBtn = this.createButton('cancel', 'Annuler');
@@ -470,11 +469,11 @@ class YamsGame {
       }
     });
 
-    editor.prepend(input);
+    hint.after(input);
     editor.append(okBtn, cancelBtn);
     document.body.appendChild(editor);
-    
-    setTimeout(() => input.focus(), 100);
+
+    setTimeout(() => { input.focus(); input.select(); }, 100);
   }
 
   createButton(className, text) {
@@ -670,22 +669,31 @@ class YamsGame {
     overlay.setAttribute('aria-modal', 'true');
     overlay.setAttribute('aria-label', isDraw ? 'Match nul' : `Victoire de ${winnerName}`);
 
-    // Confettis (seulement quand il y a un gagnant)
-    let confettiHTML = '';
+    // Feux d'artifice (seulement quand il y a un gagnant)
+    let fireworksHTML = '';
     if (!isDraw) {
-      const colors = ['#21808d', '#32b8c6', '#e68161', '#f5c518', '#c0152f', '#2da6b2'];
-      for (let i = 0; i < 90; i++) {
-        const left = Math.random() * 100;
-        const delay = Math.random() * 3.5;
-        const duration = 3 + Math.random() * 3;
-        const color = colors[i % colors.length];
-        const w = 6 + Math.random() * 9;
-        confettiHTML += `<span class="confetti" style="left:${left}%;background:${color};width:${w}px;height:${w * 0.42}px;animation-delay:-${delay}s;animation-duration:${duration}s"></span>`;
+      const colors = ['#21808d', '#32b8c6', '#e68161', '#f5c518', '#c0152f', '#8e7cff', '#2da6b2', '#ffffff'];
+      const bursts = 16;
+      const sparksPerBurst = 26;
+      for (let b = 0; b < bursts; b++) {
+        const x = 4 + Math.random() * 92;
+        const y = 6 + Math.random() * 42;
+        const delay = (Math.random() * 4).toFixed(2);
+        const color = colors[b % colors.length];
+        let sparks = '';
+        for (let s = 0; s < sparksPerBurst; s++) {
+          const angle = (360 / sparksPerBurst) * s + Math.random() * 8;
+          const dist = 60 + Math.random() * 70;
+          const dx = (Math.cos(angle * Math.PI / 180) * dist).toFixed(1);
+          const dy = (Math.sin(angle * Math.PI / 180) * dist).toFixed(1);
+          sparks += `<span class="fw-spark" style="--dx:${dx}px;--dy:${dy}px"></span>`;
+        }
+        fireworksHTML += `<span class="fw" style="left:${x}%;top:${y}%;--fw-color:${color};animation-delay:-${delay}s"><span class="fw-flash"></span>${sparks}</span>`;
       }
     }
 
     overlay.innerHTML = `
-      <div class="win-confetti" aria-hidden="true">${confettiHTML}</div>
+      <div class="win-fireworks" aria-hidden="true">${fireworksHTML}</div>
       <div class="win-card">
         <div class="win-emoji">${isDraw ? '🤝' : '🏆'}</div>
         <div class="win-kicker">${isDraw ? 'Égalité parfaite' : 'Partie terminée'}</div>
