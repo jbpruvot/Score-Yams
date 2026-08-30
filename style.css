@@ -1812,3 +1812,69 @@ body {
     font-size: var(--font-size-base);
   }
 }
+
+/* ============================================================
+   COMPACTAGE — voir toute la feuille sans défilement en paysage
+   (tablette / desktop large, layout 2 colonnes ci-dessus)
+   ============================================================ */
+
+@media (min-width: 1024px) {
+    .container {
+          margin-top: var(--space-12);
+          margin-bottom: var(--space-12);
+          row-gap: var(--space-10);
+          column-gap: var(--space-24);
+          padding: var(--space-16);
+    }
+
+  .topbar {
+        margin-bottom: var(--space-8);
+        padding-bottom: var(--space-8);
+  }
+    .topbar h1 { font-size: clamp(20px, 2.2vw, 26px); }
+
+  .quick-config {
+        padding: var(--space-10) var(--space-12);
+        gap: var(--space-8);
+  }
+    .keyboard-hints { display: none; }
+
+  .progress-section { gap: var(--space-8); }
+    .player-progress { padding: var(--space-10); }
+    .progress-header { margin-bottom: var(--space-4); }
+    .progress-bar { height: 8px; margin-bottom: var(--space-4); }
+
+  .reset-button {
+        padding: var(--space-8);
+        margin-top: 0;
+        font-size: var(--font-size-base);
+  }
+
+  .score-table th,
+    .score-table td {
+          padding: var(--space-4) var(--space-10);
+    }
+    .score-table thead th {
+          padding: var(--space-6) var(--space-10);
+    }
+    .score-table .section-header td {
+          padding: var(--space-4) var(--space-10);
+    }
+    .score-table .final-row td,
+    .score-table .final-row td:first-child {
+          padding-top: var(--space-6);
+          padding-bottom: var(--space-6);
+          font-size: var(--font-size-base);
+    }
+    .score-table tbody td.score.fixed {
+          font-size: var(--font-size-sm);
+    }
+    .score { min-width: 88px; font-size: var(--font-size-sm); }
+
+  .score-table td.score { height: 30px; font-size: var(--font-size-sm); }
+
+  .grid-wrapper {
+        max-height: calc(100dvh - 3 * var(--space-12));
+        overflow-y: auto;
+  }
+}
