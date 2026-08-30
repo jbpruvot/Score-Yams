@@ -10,7 +10,7 @@ tactiles généreuses), pensée notamment pour la Lenovo Tab / Novo Tab Pro.
 
 ## Démo
 
-Une fois GitHub Pages activé : `https://<utilisateur>.github.io/<nom-du-repo>/`
+Une fois GitHub Pages activé : **https://jbpruvot.github.io/Score-Yams/**
 
 ## Installer l'application
 
@@ -54,11 +54,11 @@ python -m http.server 8000
 
 ## Déploiement (GitHub Pages)
 
-1. Pousser ce dépôt sur GitHub.
+1. Dépôt : https://github.com/jbpruvot/Score-Yams
 2. **Settings → Pages → Build and deployment → Source : Deploy from a branch**.
 3. Choisir la branche `main` et le dossier `/ (root)`, puis **Save**.
 4. Attendre ~1 minute : l'appli est disponible sur
-   `https://<utilisateur>.github.io/<nom-du-repo>/`.
+   **https://jbpruvot.github.io/Score-Yams/**
 
 > Après chaque mise à jour du code, pensez à incrémenter `CACHE_NAME` dans
 > [`sw.js`](sw.js) pour que les appareils déjà installés récupèrent la nouvelle
