@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Yams – Feuille de score</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#21808d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Yams">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container" aria-live="polite">
+    <div class="topbar">
+      <h1>🎲 Yams</h1>
+      <div class="controls">
+        <button id="historyBtn" class="btn btn--secondary" aria-label="Historique des parties">📚 Historique</button>
+        <button id="statsBtn" class="btn btn--secondary" aria-label="Statistiques du jour">📊 Statistiques du jour</button>
+        <button id="printBtn" class="btn btn--secondary" aria-label="Imprimer l'historique">🖨️ Imprimer l'historique</button>
+        <span id="activeBadge" class="status status--info" role="status">Tour : Caty</span>
+      </div>
+    </div>
+
+    <div class="quick-config" role="group" aria-label="Configuration rapide">
+      <div class="player-inputs">
+        <label for="name0" class="sr-only">Nom J1</label>
+        <input id="name0" class="form-control" type="text" value="Caty" aria-label="Nom Joueur 1">
+        <span class="vs-text">vs</span>
+        <label for="name1" class="sr-only">Nom J2</label>
+        <input id="name1" class="form-control" type="text" value="JB" aria-label="Nom Joueur 2">
+      </div>
+      <div class="starter-controls">
+        <select id="starter" class="form-control" aria-label="Qui commence?">
+          <option value="0">J1 commence</option>
+          <option value="1">J2 commence</option>
+        </select>
+        <button id="applyStarter" class="btn btn--primary">Démarrer</button>
+      </div>
+      <div class="keyboard-hints">
+        <span>Raccourcis : <kbd>←/→</kbd> changer de joueur • <kbd>Entrée</kbd> éditer • <kbd>E</kbd> éditer</span>
+      </div>
+    </div>
+
+    <div class="progress-section">
+      <div class="player-progress" aria-label="Progression Joueur 1">
+        <div class="progress-header">
+          <strong id="h0Label">Caty</strong>
+          <small>Objectif: 63</small>
+        </div>
+        <div class="progress-bar">
+          <div id="p0bar" class="progress-fill p0"></div>
+        </div>
+        <div class="progress-text">
+          <small id="p0remain">Reste 63 pts pour le bonus</small>
+        </div>
+      </div>
+      <div class="player-progress" aria-label="Progression Joueur 2">
+        <div class="progress-header">
+          <strong id="h1Label">JB</strong>
+          <small>Objectif: 63</small>
+        </div>
+        <div class="progress-bar">
+          <div id="p1bar" class="progress-fill p1"></div>
+        </div>
+        <div class="progress-text">
+          <small id="p1remain">Reste 63 pts pour le bonus</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-wrapper" tabindex="0">
+      <table id="grid" class="score-table" aria-label="Feuille de score">
+        <thead>
+          <tr>
+            <th>Combinaison</th>
+            <th id="h0" class="player-header">Caty</th>
+            <th id="h1" class="player-header">JB</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="section-header"><td colspan="3">Section supérieure</td></tr>
+          <tr data-cat="as"><td>As</td><td class="score clickable" id="as-0" tabindex="0">0/1/2/3/4/5</td><td class="score clickable" id="as-1" tabindex="0">0/1/2/3/4/5</td></tr>
+          <tr data-cat="deux"><td>Deux</td><td class="score clickable" id="deux-0" tabindex="0">0/2/4/6/8/10</td><td class="score clickable" id="deux-1" tabindex="0">0/2/4/6/8/10</td></tr>
+          <tr data-cat="trois"><td>Trois</td><td class="score clickable" id="trois-0" tabindex="0">0/3/6/9/12/15</td><td class="score clickable" id="trois-1" tabindex="0">0/3/6/9/12/15</td></tr>
+          <tr data-cat="quatre"><td>Quatre</td><td class="score clickable" id="quatre-0" tabindex="0">0/4/8/12/16/20</td><td class="score clickable" id="quatre-1" tabindex="0">0/4/8/12/16/20</td></tr>
+          <tr data-cat="cinq"><td>Cinq</td><td class="score clickable" id="cinq-0" tabindex="0">0/5/10/15/20/25</td><td class="score clickable" id="cinq-1" tabindex="0">0/5/10/15/20/25</td></tr>
+          <tr data-cat="six"><td>Six</td><td class="score clickable" id="six-0" tabindex="0">0/6/12/18/24/30</td><td class="score clickable" id="six-1" tabindex="0">0/6/12/18/24/30</td></tr>
+          <tr class="total-row"><td>SOUS-TOTAL</td><td class="score" id="subU-0">0</td><td class="score" id="subU-1">0</td></tr>
+          <tr class="total-row"><td>Bonus (+35 ≥63)</td><td class="score" id="bonus-0">0</td><td class="score" id="bonus-1">0</td></tr>
+          <tr class="total-row"><td>TOTAL SUPÉRIEUR</td><td class="score" id="totU-0">0</td><td class="score" id="totU-1">0</td></tr>
+          
+          <tr class="section-header"><td colspan="3">Section inférieure</td></tr>
+          <tr data-cat="brelan"><td>Brelan</td><td class="score clickable" id="brelan-0" tabindex="0">-</td><td class="score clickable" id="brelan-1" tabindex="0">-</td></tr>
+          <tr data-cat="carre"><td>Carré</td><td class="score clickable" id="carre-0" tabindex="0">-</td><td class="score clickable" id="carre-1" tabindex="0">-</td></tr>
+          <tr data-cat="full"><td>Full House</td><td class="score clickable" id="full-0" tabindex="0">0 / 25</td><td class="score clickable" id="full-1" tabindex="0">0 / 25</td></tr>
+          <tr data-cat="petite-suite"><td>Petite Suite</td><td class="score clickable" id="petite-suite-0" tabindex="0">0 / 30</td><td class="score clickable" id="petite-suite-1" tabindex="0">0 / 30</td></tr>
+          <tr data-cat="grande-suite"><td>Grande Suite</td><td class="score clickable" id="grande-suite-0" tabindex="0">0 / 40</td><td class="score clickable" id="grande-suite-1" tabindex="0">0 / 40</td></tr>
+          <tr data-cat="yams"><td>Yams</td><td class="score clickable" id="yams-0" tabindex="0">0 / 50</td><td class="score clickable" id="yams-1" tabindex="0">0 / 50</td></tr>
+          <tr data-cat="chance"><td>Chance</td><td class="score clickable" id="chance-0" tabindex="0">-</td><td class="score clickable" id="chance-1" tabindex="0">-</td></tr>
+          <tr class="total-row"><td>TOTAL INFÉRIEUR</td><td class="score" id="totL-0">0</td><td class="score" id="totL-1">0</td></tr>
+          <tr class="final-row"><td>TOTAL FINAL</td><td class="score" id="final-0">0</td><td class="score" id="final-1">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button id="resetBtn" class="btn btn--primary reset-button">Nouvelle partie</button>
+  </div>
+
+  <!-- Modal Statistiques du jour -->
+  <div id="statsModal" class="modal hidden" role="dialog" aria-labelledby="statsModalTitle" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="statsModalTitle">📊 Statistiques du jour</h2>
+        <button id="closeStatsModal" class="modal-close-btn" aria-label="Fermer" title="Fermer">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="statsContent">
+          <!-- Contenu généré dynamiquement -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch((err) => {
+          console.warn('Service worker registration failed:', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

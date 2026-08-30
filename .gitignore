@@ -1,0 +1,14 @@
+# Anciennes feuilles / sources bureautiques (non liées à la PWA)
+Feuilles Yams/
+*.pub
+*.xls
+*.xlsx
+*.pdf
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.vscode/
+.idea/
