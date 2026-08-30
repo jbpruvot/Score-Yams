@@ -642,27 +642,100 @@ class YamsGame {
   }
 
   gameComplete() {
-    const score0Element = document.getElementById('final-0');
-    const score1Element = document.getElementById('final-1');
-    const score0 = parseInt(score0Element?.textContent || '0', 10);
-    const score1 = parseInt(score1Element?.textContent || '0', 10);
+    const score0 = parseInt(document.getElementById('final-0')?.textContent || '0', 10);
+    const score1 = parseInt(document.getElementById('final-1')?.textContent || '0', 10);
     const winner = score0 > score1 ? 0 : (score1 > score0 ? 1 : null);
 
-    const message = `🎉 Partie terminée !\n\n${this.state.playerNames[0]}: ${score0} pts\n${this.state.playerNames[1]}: ${score1} pts\n\n${
-      winner !== null ? `🏆 Gagnant: ${this.state.playerNames[winner]}` : '🤝 Match nul !'
-    }`;
-
-    alert(message);
-    
     // CORRECTION : Toujours sauvegarder avec isComplete: true
     this.saveToHistory(true);
+
+    this.showWinScreen(winner, score0, score1);
+  }
+
+  showWinScreen(winner, score0, score1) {
+    this.closeAllEditors();
+    document.querySelectorAll('.win-overlay').forEach(el => el.remove());
+
+    const names = this.state.playerNames;
+    const isDraw = winner === null;
+    const winnerName = isDraw ? '' : names[winner];
+    const scores = [
+      { name: names[0], score: score0, win: winner === 0 },
+      { name: names[1], score: score1, win: winner === 1 }
+    ];
+
+    const overlay = document.createElement('div');
+    overlay.className = 'win-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', isDraw ? 'Match nul' : `Victoire de ${winnerName}`);
+
+    // Confettis (seulement quand il y a un gagnant)
+    let confettiHTML = '';
+    if (!isDraw) {
+      const colors = ['#21808d', '#32b8c6', '#e68161', '#f5c518', '#c0152f', '#2da6b2'];
+      for (let i = 0; i < 90; i++) {
+        const left = Math.random() * 100;
+        const delay = Math.random() * 3.5;
+        const duration = 3 + Math.random() * 3;
+        const color = colors[i % colors.length];
+        const w = 6 + Math.random() * 9;
+        confettiHTML += `<span class="confetti" style="left:${left}%;background:${color};width:${w}px;height:${w * 0.42}px;animation-delay:-${delay}s;animation-duration:${duration}s"></span>`;
+      }
+    }
+
+    overlay.innerHTML = `
+      <div class="win-confetti" aria-hidden="true">${confettiHTML}</div>
+      <div class="win-card">
+        <div class="win-emoji">${isDraw ? '🤝' : '🏆'}</div>
+        <div class="win-kicker">${isDraw ? 'Égalité parfaite' : 'Partie terminée'}</div>
+        <h2 class="win-title">${isDraw ? 'Match nul !' : `${winnerName} gagne !`}</h2>
+        <div class="win-scores">
+          ${scores.map(s => `
+            <div class="win-score ${s.win ? 'is-winner' : ''}">
+              <span class="win-score-name">${s.name}</span>
+              <span class="win-score-value">${s.score}</span>
+              <span class="win-score-unit">points</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="win-actions">
+          <button type="button" class="btn btn--primary win-replay">Nouvelle partie</button>
+          <button type="button" class="btn btn--secondary win-close">Fermer</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('is-visible'));
+
+    const close = () => {
+      overlay.classList.remove('is-visible');
+      setTimeout(() => overlay.remove(), 300);
+      document.removeEventListener('keydown', onKey);
+    };
+    const onKey = (e) => {
+      if (e.key === 'Escape') close();
+    };
+
+    overlay.querySelector('.win-close').addEventListener('click', close);
+    overlay.querySelector('.win-replay').addEventListener('click', () => {
+      close();
+      this.resetGame(true);
+    });
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) close();
+    });
+    document.addEventListener('keydown', onKey);
+    overlay.querySelector('.win-replay').focus();
   }
 
   // CORRECTION MAJEURE : Nouvelle partie garde l'historique intact
-  resetGame() {
+  resetGame(skipConfirm = false) {
     this.closeAllEditors();
     this.closeStatsModal();
-    if (!confirm('Commencer une nouvelle partie ?')) return;
+    document.querySelectorAll('.win-overlay').forEach(el => el.remove());
+    if (!skipConfirm && !confirm('Commencer une nouvelle partie ?')) return;
 
     try {
       // CORRECTION : Ne sauvegarder la partie actuelle QUE si elle a des scores significatifs

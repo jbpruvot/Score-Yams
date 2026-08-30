@@ -1852,29 +1852,230 @@ body {
 
   .score-table th,
     .score-table td {
-          padding: var(--space-4) var(--space-10);
+          padding: var(--space-6) var(--space-12);
     }
     .score-table thead th {
-          padding: var(--space-6) var(--space-10);
+          padding: var(--space-8) var(--space-12);
     }
     .score-table .section-header td {
-          padding: var(--space-4) var(--space-10);
+          padding: var(--space-4) var(--space-12);
     }
     .score-table .final-row td,
     .score-table .final-row td:first-child {
-          padding-top: var(--space-6);
-          padding-bottom: var(--space-6);
+          padding-top: var(--space-8);
+          padding-bottom: var(--space-8);
           font-size: var(--font-size-base);
     }
     .score-table tbody td.score.fixed {
-          font-size: var(--font-size-sm);
+          font-size: var(--font-size-base);
     }
-    .score { min-width: 88px; font-size: var(--font-size-sm); }
+    .score { min-width: 104px; font-size: var(--font-size-base); }
 
-  .score-table td.score { height: 30px; font-size: var(--font-size-sm); }
+  .score-table td.score { height: 36px; font-size: var(--font-size-base); }
 
   .grid-wrapper {
-        max-height: calc(100dvh - 3 * var(--space-12));
+        max-height: calc(100dvh - 96px);
         overflow-y: auto;
+  }
+}
+
+/* ============================================================
+   ÉCRAN DE FIN DE PARTIE — célébration du gagnant + confettis
+   ============================================================ */
+
+.win-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-20);
+  background: rgba(10, 20, 22, 0.62);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-standard);
+}
+
+.win-overlay.is-visible {
+  opacity: 1;
+}
+
+.win-confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confetti {
+  position: absolute;
+  top: -12vh;
+  border-radius: 2px;
+  opacity: 0;
+  animation-name: confetti-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-12vh) rotate(0deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(112vh) rotate(720deg);
+    opacity: 1;
+  }
+}
+
+.win-card {
+  position: relative;
+  z-index: 1;
+  width: min(560px, 94vw);
+  background: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: 28px;
+  padding: var(--space-32) var(--space-24);
+  text-align: center;
+  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.55);
+  transform: scale(0.82) translateY(20px);
+  transition: transform 0.35s var(--ease-standard);
+}
+
+.win-overlay.is-visible .win-card {
+  transform: scale(1) translateY(0);
+}
+
+.win-emoji {
+  font-size: 72px;
+  line-height: 1;
+  animation: win-pop 0.6s var(--ease-standard) both;
+}
+
+@keyframes win-pop {
+  0% {
+    transform: scale(0) rotate(-25deg);
+  }
+  70% {
+    transform: scale(1.25) rotate(8deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+.win-kicker {
+  margin-top: var(--space-12);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+}
+
+.win-title {
+  margin: var(--space-8) 0 var(--space-20);
+  font-size: clamp(28px, 6vw, 44px);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.02em;
+  color: var(--color-primary);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-teal-300));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.win-scores {
+  display: flex;
+  gap: var(--space-12);
+  justify-content: center;
+  margin-bottom: var(--space-24);
+}
+
+.win-score {
+  flex: 1 1 0;
+  max-width: 200px;
+  background: var(--color-background);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-16) var(--space-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.win-score-name {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.win-score-value {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-mono);
+  color: var(--color-text);
+}
+
+.win-score-unit {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.win-score.is-winner {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.win-score.is-winner .win-score-name,
+.win-score.is-winner .win-score-value,
+.win-score.is-winner .win-score-unit {
+  color: var(--color-btn-primary-text);
+}
+
+.win-actions {
+  display: flex;
+  gap: var(--space-12);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.win-actions .btn {
+  min-width: 160px;
+  min-height: 52px;
+  font-size: var(--font-size-lg);
+  border-radius: var(--radius-full);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+
+  .win-overlay,
+  .win-card,
+  .win-emoji {
+    transition: none;
+    animation: none;
+  }
+
+  .win-card {
+    transform: none;
+  }
+}
+
+@media print {
+  .win-overlay {
+    display: none !important;
   }
 }
